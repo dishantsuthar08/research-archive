@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Academic Baseline ─────────────────────────────────── */
+@layer base {
+  :root {
+    --color-bg:        #f8f8f6;
+    --color-surface:   #ffffff;
+    --color-rule:      #d8d6cf;
+    --color-ink:       #1a1a18;
+    --color-ink-muted: #5a5a52;
+    --color-accent:    #1a3a6b;
+  }
+
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-archive-50 text-ink font-sans;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif text-ink;
+  }
+
+  p {
+    @apply text-body text-ink leading-relaxed;
+  }
+
+  a {
+    color: var(--color-accent);
+    transition: color 150ms;
+  }
+
+  a:hover {
+    color: #142d54;
+    text-decoration: underline;
+  }
+
+  hr {
+    @apply border-rule my-8;
+  }
+
+  code, pre {
+    @apply font-mono text-sm;
+  }
+
+  ::selection {
+    background-color: #c9d8ef;
+    color: var(--color-ink);
+  }
+}
+
+/* ── Component Utilities ──────────────────────────────── */
+@layer components {
+
+  .archive-container {
+    @apply max-w-archive mx-auto px-6 lg:px-8;
+  }
+
+  .doi-link {
+    @apply font-mono text-caption text-ink-muted;
+    transition: color 150ms;
+  }
+  .doi-link:hover { color: var(--color-accent); }
+
+  .abstract-text {
+    @apply text-body text-ink leading-relaxed;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  .meta-label {
+    @apply text-label uppercase text-ink-faint tracking-wider;
+  }
+
+  .pub-type-badge {
+    @apply inline-flex items-center px-2 py-0.5 text-label uppercase tracking-wider rounded-sm border;
+  }
+
+  .cat-tag {
+    @apply inline-flex items-center px-2.5 py-1 text-caption font-medium rounded-sm
+           bg-archive-100 text-ink-muted border border-archive-200
+           transition-colors duration-150 cursor-pointer;
+  }
+  .cat-tag:hover {
+    background-color: #e8eef7;
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+
+  .pdf-button {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 text-caption font-medium
+           text-white rounded-sm transition-colors duration-150;
+    background-color: var(--color-accent);
+  }
+  .pdf-button:hover { background-color: #142d54; color: white; text-decoration: none; }
+
+  .pub-card {
+    @apply bg-white border border-rule rounded-sm shadow-card
+           hover:shadow-card-hover transition-shadow duration-200;
+  }
+
+  .stat-card {
+    @apply bg-white border border-rule rounded-sm px-5 py-4 text-center;
+  }
+
+  .search-input {
+    @apply w-full px-4 py-2.5 bg-white border border-rule rounded-sm
+           font-sans text-body text-ink placeholder:text-ink-faint
+           transition-colors duration-150;
+    outline: none;
+  }
+  .search-input:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 2px #e8eef7;
+  }
+
+  .nav-link {
+    @apply text-caption font-medium text-ink-muted uppercase tracking-wider
+           transition-colors duration-150;
+  }
+  .nav-link:hover { @apply text-ink; text-decoration: none; }
+
+  .nav-link-active {
+    @apply text-ink border-b border-ink pb-0.5;
+  }
+
+  .citation-block {
+    @apply bg-archive-50 border border-rule rounded-sm p-4 font-mono text-caption text-ink-muted;
+    word-break: break-all;
+  }
+
+  .keyword-pill {
+    @apply inline-flex items-center px-2.5 py-1 text-caption
+           bg-white border border-rule rounded-full text-ink-muted
+           transition-colors;
+  }
+  .keyword-pill:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+}
+
+/* ── Scrollbar ──────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-rule); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #b0ab99; }
+
+/* ── Print ─────────────────────────────────────────── */
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; }
+  .pub-card { box-shadow: none; border: 1px solid #ccc; }
+}

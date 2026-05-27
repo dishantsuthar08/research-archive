@@ -1,0 +1,92 @@
+[
+  {
+    "id": "author-RA-001",
+    "name": "Riya Ahuja",
+    "affiliation": "Independent Researcher",
+    "orcid": "0000-0002-1234-5678",
+    "email": "riya.ahuja@indieresearch.io",
+    "bio": "Independent security researcher specialising in IoT network security, anomaly detection, and embedded systems. Interested in bridging gap between ML theory and constrained device deployment.",
+    "researchAreas": ["IoT Security", "Anomaly Detection", "Edge Computing"],
+    "publicationIds": ["hybriscan-2024-001"]
+  },
+  {
+    "id": "author-VM-001",
+    "name": "Varun Mehta",
+    "affiliation": "Independent Researcher",
+    "orcid": "0000-0003-8765-4321",
+    "email": "varun.mehta@indieresearch.io",
+    "bio": "Researcher focused on network traffic analysis, deep packet inspection, and graph-based anomaly detection for heterogeneous network environments.",
+    "researchAreas": ["Network Security", "Graph Neural Networks", "Traffic Analysis"],
+    "publicationIds": ["hybriscan-2024-001"]
+  },
+  {
+    "id": "author-SK-001",
+    "name": "Siddharth Kapoor",
+    "affiliation": "Independent Researcher",
+    "orcid": "0000-0001-9876-5432",
+    "email": "sid.kapoor@indieresearch.io",
+    "bio": "Research interests span federated learning, privacy-preserving machine learning, and financial fraud detection. Advocate for open, privacy-respecting AI in regulated industries.",
+    "researchAreas": ["Federated Learning", "Differential Privacy", "Fraud Detection"],
+    "publicationIds": ["fraudshield-2024-002"]
+  },
+  {
+    "id": "author-PN-001",
+    "name": "Priya Nambiar",
+    "affiliation": "Independent Researcher",
+    "orcid": "0000-0002-4567-8901",
+    "email": "priya.nambiar@indieresearch.io",
+    "bio": "Works on explainable machine learning systems for high-stakes decision-making, focusing on regulatory compliance and auditability in financial AI.",
+    "researchAreas": ["Explainable AI", "GDPR Compliance", "Financial ML"],
+    "publicationIds": ["fraudshield-2024-002"]
+  },
+  {
+    "id": "author-AT-001",
+    "name": "Arjun Trivedi",
+    "affiliation": "Independent Researcher",
+    "orcid": "0000-0003-1122-3344",
+    "email": "arjun.trivedi@indieresearch.io",
+    "bio": "Systems researcher focused on distributed ML optimisation, gradient compression, and communication-efficient training algorithms.",
+    "researchAreas": ["Distributed ML", "Gradient Compression", "Federated Optimisation"],
+    "publicationIds": ["fraudshield-2024-002"]
+  },
+  {
+    "id": "author-DK-001",
+    "name": "Divya Krishnamurthy",
+    "affiliation": "Independent Researcher",
+    "orcid": "0000-0001-5566-7788",
+    "email": "divya.k@indieresearch.io",
+    "bio": "NLP researcher with interest in reasoning capabilities of large language models, systematic literature review methodology, and evaluation of emergent behaviours in foundation models.",
+    "researchAreas": ["Large Language Models", "Chain-of-Thought Reasoning", "NLP Evaluation"],
+    "publicationIds": ["survey-llm-reasoning-2024-003"]
+  },
+  {
+    "id": "author-AR-001",
+    "name": "Aditya Rao",
+    "affiliation": "Independent Researcher",
+    "orcid": "0000-0002-7788-9900",
+    "email": "aditya.rao@indieresearch.io",
+    "bio": "Quantum computing researcher focusing on near-term applications, error correction codes, and the theory-practice gap in NISQ-era quantum devices.",
+    "researchAreas": ["Quantum Error Correction", "Surface Codes", "NISQ Devices"],
+    "publicationIds": ["quantum-error-2024-004"]
+  },
+  {
+    "id": "author-NJ-001",
+    "name": "Nalini Joshi",
+    "affiliation": "Independent Researcher",
+    "orcid": "0000-0001-2233-4455",
+    "email": "nalini.joshi@indieresearch.io",
+    "bio": "Specialises in classical simulation of quantum circuits, syndrome decoding algorithms, and hardware-aware quantum circuit optimisation.",
+    "researchAreas": ["Quantum Simulation", "Syndrome Decoding", "Circuit Optimisation"],
+    "publicationIds": ["quantum-error-2024-004"]
+  },
+  {
+    "id": "author-MB-001",
+    "name": "Meera Balasubramanian",
+    "affiliation": "Independent Researcher",
+    "orcid": "0000-0003-5544-6677",
+    "email": "meera.b@indieresearch.io",
+    "bio": "Computational biologist applying geometric deep learning to structural biology problems. Interests include protein folding, molecular dynamics simulation, and drug-target interaction prediction.",
+    "researchAreas": ["Protein Structure Prediction", "Geometric Deep Learning", "Computational Biology"],
+    "publicationIds": ["bioinf-protein-2024-005"]
+  }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "id": "cybersecurity",
+    "label": "Cybersecurity",
+    "description": "Research on information security, network security, intrusion detection, and cryptographic systems.",
+    "color": "bg-red-50 text-red-700 border-red-200"
+  },
+  {
+    "id": "machine-learning",
+    "label": "Machine Learning",
+    "description": "Papers on supervised, unsupervised, and reinforcement learning algorithms and applications.",
+    "color": "bg-blue-50 text-blue-700 border-blue-200"
+  },
+  {
+    "id": "internet-of-things",
+    "label": "Internet of Things",
+    "description": "Research on IoT architectures, protocols, security, and edge computing deployments.",
+    "color": "bg-orange-50 text-orange-700 border-orange-200"
+  },
+  {
+    "id": "financial-technology",
+    "label": "Financial Technology",
+    "description": "Technical research in fintech, payment systems, fraud detection, and algorithmic trading.",
+    "color": "bg-emerald-50 text-emerald-700 border-emerald-200"
+  },
+  {
+    "id": "privacy-security",
+    "label": "Privacy & Security",
+    "description": "Research on differential privacy, federated learning, anonymization, and data governance.",
+    "color": "bg-purple-50 text-purple-700 border-purple-200"
+  },
+  {
+    "id": "natural-language-processing",
+    "label": "Natural Language Processing",
+    "description": "Computational linguistics, language models, text understanding, and generation systems.",
+    "color": "bg-sky-50 text-sky-700 border-sky-200"
+  },
+  {
+    "id": "quantum-computing",
+    "label": "Quantum Computing",
+    "description": "Quantum algorithms, error correction, hardware architectures, and near-term applications.",
+    "color": "bg-violet-50 text-violet-700 border-violet-200"
+  },
+  {
+    "id": "computer-architecture",
+    "label": "Computer Architecture",
+    "description": "Processor design, memory systems, hardware-software co-design, and embedded systems.",
+    "color": "bg-slate-50 text-slate-700 border-slate-200"
+  },
+  {
+    "id": "bioinformatics",
+    "label": "Bioinformatics",
+    "description": "Computational approaches to biological data analysis, genomics, and structural biology.",
+    "color": "bg-teal-50 text-teal-700 border-teal-200"
+  }
+]
