@@ -1,34 +1,67 @@
-import { usePublications } from '../hooks/usePublications'
-import { useSearch } from '../hooks/useSearch'
-import PublicationCard from '../components/publication/PublicationCard'
-import SearchBar from '../components/search/SearchBar'
-import FilterPanel from '../components/search/FilterPanel'
-import SectionHeader from '../components/ui/SectionHeader'
+import { useEffect, useState } from "react";
+import { supabase } from "../lib/supabase";
+import { useSearch } from "../hooks/useSearch";
+import PublicationCard from "../components/publication/PublicationCard";
+import SearchBar from "../components/search/SearchBar";
+import FilterPanel from "../components/search/FilterPanel";
+import SectionHeader from "../components/ui/SectionHeader";
 
 export default function Publications() {
-  const { all } = usePublications()
+  const [all, setAll] = useState([]);
+  const [loading, setLoading] = useState(true);
   const {
-    filters, results, hasActiveFilters,
-    setQuery, setCategory, setType, setSortBy, resetFilters,
-  } = useSearch(all)
+    filters,
+    results,
+    hasActiveFilters,
+    setQuery,
+    setCategory,
+    setType,
+    setSortBy,
+    resetFilters,
+  } = useSearch(all);
+
+  useEffect(() => {
+    fetchPublications();
+  }, []);
+
+  async function fetchPublications() {
+    const { data, error } = await supabase
+      .from("publications")
+      .select("*")
+      .eq("status", "published")
+      .order("published_date", { ascending: false });
+
+    if (!error) {
+      setAll(data);
+    }
+
+    setLoading(false);
+  }
+
+  if (loading) {
+    return (
+      <div className="archive-container py-20">Loading publications...</div>
+    );
+  }
 
   return (
     <div className="bg-archive-50">
-
       {/* Page header */}
       <div className="bg-white border-b border-rule">
         <div className="archive-container py-8">
           <p className="meta-label mb-1">Repository Index</p>
-          <h1 className="font-serif text-display text-ink mb-4">Publications</h1>
+          <h1 className="font-serif text-display text-ink mb-4">
+            Publications
+          </h1>
           <p className="text-caption text-ink-muted max-w-prose">
-            All research papers, review papers, and technical articles published in the
-            IndieResearch Archive. Use the search and filters below to locate specific work.
+            All research papers, review papers, and technical articles published
+            in the IndieResearch Archive. Use the search and filters below to
+            locate specific work.
           </p>
         </div>
       </div>
 
       <div className="archive-container py-8">
-
         {/* Search bar */}
         <div className="mb-4">
           <SearchBar value={filters.query} onChange={setQuery} />
@@ -67,12 +100,12 @@ export default function Publications() {
           </div>
         ) : (
           <div className="flex flex-col gap-4">
-            {results.map(pub => (
+            {results.map((pub) => (
               <PublicationCard key={pub.id} publication={pub} />
             ))}
           </div>
         )}
       </div>
     </div>
-  )
+  );
 }

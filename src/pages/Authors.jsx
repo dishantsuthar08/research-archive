@@ -1,9 +1,51 @@
 import { Link } from 'react-router-dom'
 import { LinkIcon } from '@heroicons/react/24/outline'
 import { usePublications } from '../hooks/usePublications'
+import { useEffect, useState } from 'react'
+import { supabase } from '../lib/supabase'
 
 export default function Authors() {
-  const { authors, byId } = usePublications()
+
+  const [authors, setAuthors] = useState([])
+
+useEffect(() => {
+  fetchAuthors()
+}, [])
+
+async function fetchAuthors() {
+
+  const { data, error } = await supabase
+    .from('publications')
+    .select('*')
+    .eq('status', 'published')
+
+  if (error) {
+    console.error(error)
+    return
+  }
+
+  const authorMap = {}
+
+  data.forEach(pub => {
+
+    ;(pub.authors || []).forEach(author => {
+
+      const key = author.email || author.name
+
+      if (!authorMap[key]) {
+        authorMap[key] = {
+          ...author,
+          publications: []
+        }
+      }
+
+      authorMap[key].publications.push(pub)
+    })
+  })
+
+  setAuthors(Object.values(authorMap))
+}
+  
 
   return (
     <div className="bg-archive-50">
@@ -22,10 +64,7 @@ export default function Authors() {
       <div className="archive-container py-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {authors.map(author => {
-            const pubs = (author.publicationIds || [])
-              .map(id => byId?.[id])
-              .filter(Boolean)
-
+            
             return (
               <article key={author.id} className="pub-card p-6">
 
@@ -67,13 +106,13 @@ export default function Authors() {
                 )}
 
                 {/* Publications */}
-                {pubs.length > 0 && (
+                {author.publications?.length > 0 && (
                   <div className="pt-3 border-t border-rule">
                     <p className="meta-label mb-2">
-                      Publications ({pubs.length})
+                      Publications ({author.publications.length})
                     </p>
                     <ul className="space-y-1">
-                      {pubs.map(pub => (
+                      {author.publications.map(pub => (
                         <li key={pub.id}>
                           <Link
                             to={`/publications/${pub.slug}`}

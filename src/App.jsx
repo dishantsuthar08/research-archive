@@ -7,6 +7,8 @@ import Authors from './pages/Authors'
 import Categories from './pages/Categories'
 import CategoryDetail from './pages/CategoryDetail'
 import About from './pages/About'
+import Submit from './pages/Submit'
+import Admin from './pages/Admin'
 
 function NotFound() {
   return (
@@ -29,7 +31,10 @@ export default function App() {
           <Route path="/categories"                element={<Categories />} />
           <Route path="/categories/:slug"          element={<CategoryDetail />} />
           <Route path="/about"                     element={<About />} />
+          <Route path="/submit" element={<Submit />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="*"                          element={<NotFound />} />
+          
         </Routes>
       </Layout>
     </BrowserRouter>

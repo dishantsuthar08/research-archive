@@ -3,11 +3,12 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import { Bars3Icon, XMarkIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 
 const NAV_LINKS = [
-  { to: '/',             label: 'Home',         end: true  },
+  { to: '/',             label: 'Home',          end: true  },
   { to: '/publications', label: 'Publications',  end: false },
-  { to: '/categories',   label: 'Categories',   end: false },
-  { to: '/authors',      label: 'Authors',      end: false },
-  { to: '/about',        label: 'About',        end: false },
+  { to: '/categories',   label: 'Categories',    end: false },
+  { to: '/authors',      label: 'Authors',       end: false },
+  { to: '/submit',       label: 'Submit Paper',  end: false },
+  { to: '/about',        label: 'About',         end: false },
 ]
 
 export default function Navbar() {

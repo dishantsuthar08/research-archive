@@ -1,6 +1,7 @@
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { ArrowLeftIcon, ArrowDownTrayIcon, LinkIcon } from '@heroicons/react/24/outline'
-import { usePublication } from '../hooks/usePublications'
+import { useEffect, useState } from 'react'
+import { supabase } from '../lib/supabase'
 import PublicationBadge from '../components/publication/PublicationBadge'
 import DOIBadge from '../components/publication/DOIBadge'
 import CategoryTag from '../components/publication/CategoryTag'
@@ -19,14 +20,44 @@ function MetaRow({ label, value }) {
 
 export default function PublicationDetail() {
   const { slug } = useParams()
-  const pub = usePublication(slug)
+  const [pub, setPub] = useState(null)
+const [loading, setLoading] = useState(true)
 
-  if (!pub) return <Navigate to="/publications" replace />
+useEffect(() => {
+  fetchPublication()
+}, [slug])
+
+async function fetchPublication() {
+
+  const { data, error } = await supabase
+    .from('publications')
+    .select('*')
+    .eq('slug', slug)
+    .single()
+
+  if (!error) {
+    setPub(data)
+  }
+
+  setLoading(false)
+}
+
+  if (loading) {
+  return (
+    <div className="archive-container py-20">
+      Loading publication...
+    </div>
+  )
+}
+
+if (!pub) {
+  return <Navigate to="/publications" replace />
+}
 
   const {
     type, title, abstract, keywords, authors,
-    year, month, doi, doiUrl, pdfUrl, categories,
-    publishedDate, receivedDate, acceptedDate,
+    year, month, doi, doi_Url, pdf_Url, categories,
+    published_date, received_date, accepted_date,
     pages, volume, issue, license,
     references, citationAPA, citationBibtex,
   } = pub
@@ -93,10 +124,10 @@ export default function PublicationDetail() {
 
             {/* DOI + PDF actions */}
             <div className="flex items-center gap-3 flex-wrap mb-6">
-              <DOIBadge doi={doi} doiUrl={doiUrl} />
-              {pdfUrl && (
+              <DOIBadge doi={doi} doi_Url={doi_Url} />
+              {pdf_Url && (
                 <a
-                  href={pdfUrl}
+                  href={pdf_Url}
                   className="pdf-button"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -177,9 +208,9 @@ export default function PublicationDetail() {
             {/* Publication metadata card */}
             <div className="bg-white border border-rule rounded-sm p-5">
               <p className="meta-label mb-3">Publication Metadata</p>
-              <MetaRow label="Published"  value={formatDate(publishedDate)} />
-              <MetaRow label="Received"   value={formatDate(receivedDate)} />
-              <MetaRow label="Accepted"   value={formatDate(acceptedDate)} />
+              <MetaRow label="Published"  value={formatDate(published_date)} />
+              <MetaRow label="Received"   value={formatDate(received_date)} />
+              <MetaRow label="Accepted"   value={formatDate(accepted_date)} />
               <MetaRow label="Pages"      value={pages} />
               <MetaRow label="Volume"     value={volume} />
               <MetaRow label="Issue"      value={issue} />
@@ -219,7 +250,7 @@ export default function PublicationDetail() {
             <div className="bg-white border border-rule rounded-sm p-5">
               <p className="meta-label mb-2">Persistent Identifier</p>
               <a
-                href={doiUrl}
+                href={doi_Url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-mono text-label text-ink-muted hover:text-accent-DEFAULT break-all no-underline block"
