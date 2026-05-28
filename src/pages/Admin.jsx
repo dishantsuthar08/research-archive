@@ -45,7 +45,29 @@ export default function Admin() {
 
     const slug = sub.title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
-    const authors = sub.authors.map((a) => a.name).join(", ");
+    const authors = sub.authors
+      .map((a, index, arr) => {
+        const parts = a.name.trim().split(" ");
+
+        const lastName = parts.pop();
+
+        const initials = parts
+          .map((p) => p.charAt(0).toUpperCase() + ".")
+          .join(" ");
+
+        const formatted = `${lastName}, ${initials}`;
+
+        if (index === arr.length - 1) {
+          return formatted;
+        }
+
+        if (index === arr.length - 2) {
+          return `${formatted}, & `;
+        }
+
+        return `${formatted}, `;
+      })
+      .join("");
 
     const currentYear = new Date().getFullYear();
 
@@ -96,7 +118,8 @@ export default function Admin() {
 
       created_at: new Date().toISOString(),
 
-      citation_apa: `${authors}. (${currentYear}). ${sub.title}. IndieResearch Archive, ${publicationData.volume}(${publicationData.issue}), ${publicationData.pages}. ${publicationData.doi ? `https://doi.org/${publicationData.doi}` : ''}`,
+      citation_apa:
+      `${authors}. (${currentYear}). ${sub.title}. IndieResearch Archive, ${publicationData.volume}(${publicationData.issue}), ${publicationData.pages}. ${publicationData.doi ? `https://doi.org/${publicationData.doi}` : ""}`,
 
       citation_bibtex: `@article{${slug},
   title={${sub.title}},
@@ -106,9 +129,13 @@ export default function Admin() {
 }`,
     };
 
-    const { error: pubError } = await supabase
+    const { data, error: pubError } = await supabase
       .from("publications")
-      .insert(publicationData);
+      .insert(publicationData)
+      .select();
+
+    console.log("Publication insert:", data);
+    console.log("Publication error:", pubError);
 
     if (pubError) {
       return alert(pubError.message);
