@@ -64,8 +64,8 @@ export default function PublicationDetail() {
     year,
     month,
     doi,
-    doi_Url,
-    pdf_Url,
+    doi_url,
+    pdf_url,
     categories,
     published_date,
     received_date,
@@ -75,10 +75,14 @@ export default function PublicationDetail() {
     issue,
     license,
     references,
-    citationAPA,
-    citationBibtex,
+    citation_apa,
+    citation_bibtex,
   } = pub;
+    
+  const citationAPA = citation_apa || "";
+  const citationBibtex = citation_bibtex || "";
 
+  
   return (
     <div className="bg-archive-50">
       {/* Breadcrumb */}
@@ -105,12 +109,10 @@ export default function PublicationDetail() {
                 Volume {volume}, Issue {issue} · {month} {year}
               </span>
             </div>
-
             {/* Title */}
             <h1 className="font-serif text-[1.75rem] font-semibold text-ink leading-tight tracking-tight mb-4">
               {title}
             </h1>
-
             {/* Authors */}
             <div className="flex flex-wrap gap-x-4 gap-y-1 mb-5">
               {authors.map((author, i) => (
@@ -138,13 +140,12 @@ export default function PublicationDetail() {
                 </span>
               ))}
             </div>
-
             {/* DOI + PDF actions */}
             <div className="flex items-center gap-3 flex-wrap mb-6">
-              <DOIBadge doi={doi} doi_Url={doi_Url} />
-              {pdf_Url && (
+              <DOIBadge doi={doi} doi_url={doi_url} />
+              {pdf_url && (
                 <a
-                  href={pdf_Url}
+                  href={pdf_url}
                   className="pdf-button"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -156,7 +157,6 @@ export default function PublicationDetail() {
                 </a>
               )}
             </div>
-
             <div className="mt-8 flex gap-3">
               <a
                 href={pub.pdf_url}
@@ -175,7 +175,6 @@ export default function PublicationDetail() {
                 Download PDF
               </a>
             </div>
-
             <div className="mt-8">
               <iframe
                 src={pub.pdf_url}
@@ -187,16 +186,13 @@ export default function PublicationDetail() {
                 }}
               />
             </div>
-
             {/* Category tags */}
             <div className="flex flex-wrap gap-1.5 mb-8">
               {categories.map((cat) => (
                 <CategoryTag key={cat} label={cat} />
               ))}
             </div>
-
             <Divider />
-
             {/* Abstract */}
             <section className="mb-8" aria-labelledby="abstract-heading">
               <h2
@@ -209,7 +205,6 @@ export default function PublicationDetail() {
                 {abstract}
               </p>
             </section>
-
             {/* Keywords */}
             {keywords && keywords.length > 0 && (
               <div className="mb-8">
@@ -223,9 +218,9 @@ export default function PublicationDetail() {
                 </div>
               </div>
             )}
-
             <Divider />
 
+            
             {/* Citation */}
             <section className="mb-8" aria-labelledby="citation-heading">
               <h2
@@ -234,14 +229,13 @@ export default function PublicationDetail() {
               >
                 How to Cite
               </h2>
+
               <CitationBlock
                 citationAPA={citationAPA}
                 citationBibtex={citationBibtex}
               />
             </section>
-
             <Divider />
-
             {/* References */}
             {references && references.length > 0 && (
               <section aria-labelledby="references-heading">
@@ -318,7 +312,7 @@ export default function PublicationDetail() {
             <div className="bg-white border border-rule rounded-sm p-5">
               <p className="meta-label mb-2">Persistent Identifier</p>
               <a
-                href={doi_Url}
+                href={doi_url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-mono text-label text-ink-muted hover:text-accent-DEFAULT break-all no-underline block"

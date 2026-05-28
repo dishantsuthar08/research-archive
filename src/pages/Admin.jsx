@@ -80,9 +80,11 @@ export default function Admin() {
 
       pages: "1-10",
 
-      doi: sub.doi || null,
+      doi: sub.doi || `10.IRA.${currentYear}.${Date.now()}`,
 
-      doi_url: sub.doi ? `https://doi.org/${sub.doi}` : null,
+      doi_url: sub.doi
+        ? `https://doi.org/${sub.doi}`
+        : `https://indieresearcharchive.pages.dev/publications/${slug}`,
 
       license: "CC BY 4.0",
 
@@ -94,7 +96,7 @@ export default function Admin() {
 
       created_at: new Date().toISOString(),
 
-      citation_apa: `${authors}. (${currentYear}). ${sub.title}. IndieResearch Archive.`,
+      citation_apa: `${authors}. (${currentYear}). ${sub.title}. IndieResearch Archive, ${publicationData.volume}(${publicationData.issue}), ${publicationData.pages}. ${publicationData.doi ? `https://doi.org/${publicationData.doi}` : ''}`,
 
       citation_bibtex: `@article{${slug},
   title={${sub.title}},
