@@ -89,19 +89,30 @@ export default function Submit() {
       return setError("Submission failed: " + dbErr.message);
     }
 
-    await supabase.functions.invoke("send-submission-email", {
-      body: {
-        email: form.authors[0].email,
+    await supabase.functions.invoke(
+  'send-submission-email',
+  {
+    body: {
 
-        title: form.title,
+      email:
+        form.authors[0].email,
 
-        submissionId: `IRA-${Date.now()}`,
+      title:
+        form.title,
 
-        authors: form.authors.map((a) => a.name).join(", "),
+      submissionId:
+        `IRA-${Date.now()}`,
 
-        categories: selectedCategories.join(", "),
-      },
-    });
+      authors:
+        form.authors
+          .map(a => a.name)
+          .join(', '),
+
+      categories:
+        selectedCategories.join(', '),
+    }
+  }
+)
 
     setStatus("success");
   };
