@@ -1,3 +1,8 @@
+/**
+ * Footer.jsx
+ * PURPOSE: Site-wide footer with archive identity, nav links, policies, licence.
+ */
+
 import { Link } from 'react-router-dom'
 
 export default function Footer() {
@@ -7,7 +12,7 @@ export default function Footer() {
     <footer className="bg-white border-t border-rule mt-auto">
       <div className="archive-container py-10">
 
-        {/* Top row */}
+        {/* Top grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-rule">
 
           {/* Identity */}
@@ -15,30 +20,31 @@ export default function Footer() {
             <p className="font-serif font-semibold text-subheading text-ink mb-2">
               IndieResearch Archive
             </p>
-            <p className="text-caption text-ink-muted leading-relaxed">
+            <p className="text-caption text-ink-muted leading-relaxed mb-3">
               An open-access repository for independent research in computer science,
               engineering, and related disciplines.
             </p>
-            <p className="text-label text-ink-faint mt-3 uppercase tracking-wider">
+            <p className="text-label text-ink-faint uppercase tracking-wider">
               ISSN: 0000-0001 (Online)
             </p>
           </div>
 
-          {/* Navigation */}
+          {/* Browse */}
           <div>
             <p className="meta-label mb-3">Browse</p>
             <ul className="space-y-1.5">
               {[
-                { to: '/',             label: 'Home'         },
+                { to: '/',             label: 'Home'             },
                 { to: '/publications', label: 'All Publications' },
-                { to: '/categories',   label: 'Categories'   },
-                { to: '/authors',      label: 'Authors'      },
-                { to: '/about',        label: 'About'        },
+                { to: '/categories',   label: 'Categories'       },
+                { to: '/authors',      label: 'Authors'          },
+                { to: '/submit',       label: 'Submit a Paper'   },
+                { to: '/about',        label: 'About'            },
               ].map(({ to, label }) => (
                 <li key={to}>
                   <Link
                     to={to}
-                    className="text-caption text-ink-muted hover:text-accent-DEFAULT no-underline"
+                    className="text-caption text-ink-muted hover:text-ink no-underline"
                   >
                     {label}
                   </Link>
@@ -57,11 +63,10 @@ export default function Footer() {
                 'Peer Review Process',
                 'Author Rights',
                 'Ethical Standards',
+                'No Publication Fees',
               ].map(label => (
                 <li key={label}>
-                  <span className="text-caption text-ink-muted cursor-default">
-                    {label}
-                  </span>
+                  <span className="text-caption text-ink-muted">{label}</span>
                 </li>
               ))}
             </ul>
@@ -71,22 +76,20 @@ export default function Footer() {
         {/* Bottom row */}
         <div className="pt-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <p className="text-caption text-ink-faint">
-            © {year} IndieResearch Archive. All content published under{' '}
+            © {year} IndieResearch Archive. All content under{' '}
             <a
               href="https://creativecommons.org/licenses/by/4.0/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-ink-muted underline hover:text-accent-DEFAULT"
+              className="underline hover:text-ink-muted"
             >
               CC BY 4.0
             </a>{' '}
             unless otherwise stated.
           </p>
-          <div className="flex items-center gap-4">
-            <span className="text-caption text-ink-faint">
-              Powered by independent scholarship
-            </span>
-          </div>
+          <p className="text-caption text-ink-faint">
+            Powered by independent scholarship
+          </p>
         </div>
       </div>
     </footer>

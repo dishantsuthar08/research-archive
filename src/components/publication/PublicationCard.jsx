@@ -1,21 +1,37 @@
-import { Link } from 'react-router-dom'
-import { ArrowDownTrayIcon, ArrowRightIcon } from '@heroicons/react/24/outline'
-import PublicationBadge from './PublicationBadge'
-import DOIBadge from './DOIBadge'
-import CategoryTag from './CategoryTag'
-import { formatAuthors, truncateChars, formatDate } from '../../utils/formatters'
+import { Link } from "react-router-dom";
+import { ArrowDownTrayIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import PublicationBadge from "./PublicationBadge";
+import CategoryTag from "./CategoryTag";
+import {
+  formatAuthors,
+  truncateChars,
+  formatDate,
+} from "../../utils/formatters";
+import ArchiveIDBadge from "./ArchiveIDBadge";
 
-export default function PublicationCard({ publication, variant = 'default' }) {
+export default function PublicationCard({ publication, variant = "default" }) {
   const {
-    slug, type, title, abstract, authors,
-    year, doi, doiUrl, pdfUrl, categories,
-    publishedDate, pages, volume, issue,
-  } = publication
+    slug,
+    type,
+    title,
+    abstract,
+    authors,
+    year,
+    archive_id,
+    pdfUrl,
+    categories,
+    publishedDate,
+    pages,
+    volume,
+    issue,
+  } = publication;
 
-  const isFeatured = variant === 'featured'
+  const isFeatured = variant === "featured";
 
   return (
-    <article className={`pub-card p-6 ${isFeatured ? 'border-l-4 border-l-accent-DEFAULT' : ''}`}>
+    <article
+      className={`pub-card p-6 ${isFeatured ? "border-l-4 border-l-accent-DEFAULT" : ""}`}
+    >
       {/* Header row */}
       <div className="flex items-start justify-between gap-3 mb-3">
         <PublicationBadge type={type} />
@@ -26,9 +42,13 @@ export default function PublicationCard({ publication, variant = 'default' }) {
 
       {/* Title */}
       <Link to={`/publications/${slug}`} className="no-underline group">
-        <h3 className={`font-serif text-ink group-hover:text-accent-DEFAULT transition-colors leading-snug mb-2 ${
-          isFeatured ? 'text-[1.15rem] font-semibold' : 'text-subheading font-medium'
-        }`}>
+        <h3
+          className={`font-serif text-ink group-hover:text-accent-DEFAULT transition-colors leading-snug mb-2 ${
+            isFeatured
+              ? "text-[1.15rem] font-semibold"
+              : "text-subheading font-medium"
+          }`}
+        >
           {title}
         </h3>
       </Link>
@@ -46,7 +66,7 @@ export default function PublicationCard({ publication, variant = 'default' }) {
       {/* Category tags */}
       {categories && categories.length > 0 && (
         <div className="flex flex-wrap gap-1.5 mb-4">
-          {categories.map(cat => (
+          {categories.map((cat) => (
             <CategoryTag key={cat} label={cat} />
           ))}
         </div>
@@ -55,10 +75,12 @@ export default function PublicationCard({ publication, variant = 'default' }) {
       {/* Footer row — metadata + actions */}
       <div className="flex items-center justify-between gap-3 pt-3 border-t border-rule flex-wrap">
         <div className="flex items-center gap-3 flex-wrap">
-          <DOIBadge doi={doi} doiUrl={doiUrl} />
+          <ArchiveIDBadge archiveId={archive_id} />
+
           {pages && (
             <span className="text-label text-ink-faint">pp. {pages}</span>
           )}
+
           <span className="text-label text-ink-faint">
             {formatDate(publishedDate)}
           </span>
@@ -72,7 +94,7 @@ export default function PublicationCard({ publication, variant = 'default' }) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <ArrowDownTrayIcon style={{ width: '13px', height: '13px' }} />
+              <ArrowDownTrayIcon style={{ width: "13px", height: "13px" }} />
               PDF
             </a>
           )}
@@ -83,10 +105,10 @@ export default function PublicationCard({ publication, variant = 'default' }) {
                        hover:text-ink hover:border-ink-muted transition-colors no-underline"
           >
             View
-            <ArrowRightIcon style={{ width: '12px', height: '12px' }} />
+            <ArrowRightIcon style={{ width: "12px", height: "12px" }} />
           </Link>
         </div>
       </div>
     </article>
-  )
+  );
 }

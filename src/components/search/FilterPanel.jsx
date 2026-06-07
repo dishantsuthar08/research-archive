@@ -1,4 +1,4 @@
-import categories from '../../data/categories.json'
+import categories from "../../data/categories.json";
 
 const TYPE_OPTIONS = [
   { value: 'all',              label: 'All Types' },

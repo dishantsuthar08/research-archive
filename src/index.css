@@ -2,17 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Academic Baseline ─────────────────────────────────── */
-@layer base {
-  :root {
-    --color-bg:        #f8f8f6;
-    --color-surface:   #ffffff;
-    --color-rule:      #d8d6cf;
-    --color-ink:       #1a1a18;
-    --color-ink-muted: #5a5a52;
-    --color-accent:    #1a3a6b;
-  }
+/* ── CSS custom properties ──────────────────────────── */
+:root {
+  --accent:          #1a3a6b;
+  --accent-hover:    #142d54;
+  --accent-light:    #e8eef7;
+  --color-ink:       #1a1a18;
+  --color-ink-muted: #5a5a52;
+  --color-ink-faint: #8a8a80;
+  --color-bg:        #f8f8f6;
+  --color-surface:   #ffffff;
+  --color-rule:      #d8d6cf;
+}
 
+/* ── Base ────────────────────────────────────────────── */
+@layer base {
   html {
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
@@ -25,31 +29,18 @@
     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-serif text-ink;
-  }
+  h1, h2, h3, h4, h5, h6 { @apply font-serif text-ink; }
 
-  p {
-    @apply text-body text-ink leading-relaxed;
-  }
+  p { @apply text-body text-ink leading-relaxed; }
 
   a {
-    color: var(--color-accent);
+    color: var(--accent);
     transition: color 150ms;
   }
+  a:hover { color: var(--accent-hover); }
 
-  a:hover {
-    color: #142d54;
-    text-decoration: underline;
-  }
-
-  hr {
-    @apply border-rule my-8;
-  }
-
-  code, pre {
-    @apply font-mono text-sm;
-  }
+  hr  { @apply border-rule my-8; }
+  code, pre { @apply font-mono text-sm; }
 
   ::selection {
     background-color: #c9d8ef;
@@ -57,18 +48,19 @@
   }
 }
 
-/* ── Component Utilities ──────────────────────────────── */
+/* ── Component layer ─────────────────────────────────── */
 @layer components {
 
+  /* ── Layout ── */
   .archive-container {
     @apply max-w-archive mx-auto px-6 lg:px-8;
   }
 
-  .doi-link {
-    @apply font-mono text-caption text-ink-muted;
-    transition: color 150ms;
+  /* ── Typography utilities ── */
+  .meta-label {
+    @apply text-label uppercase text-ink-faint tracking-wider;
+    font-feature-settings: "smcp" 0;
   }
-  .doi-link:hover { color: var(--color-accent); }
 
   .abstract-text {
     @apply text-body text-ink leading-relaxed;
@@ -76,32 +68,7 @@
     hyphens: auto;
   }
 
-  .meta-label {
-    @apply text-label uppercase text-ink-faint tracking-wider;
-  }
-
-  .pub-type-badge {
-    @apply inline-flex items-center px-2 py-0.5 text-label uppercase tracking-wider rounded-sm border;
-  }
-
-  .cat-tag {
-    @apply inline-flex items-center px-2.5 py-1 text-caption font-medium rounded-sm
-           bg-archive-100 text-ink-muted border border-archive-200
-           transition-colors duration-150 cursor-pointer;
-  }
-  .cat-tag:hover {
-    background-color: #e8eef7;
-    color: var(--color-accent);
-    border-color: var(--color-accent);
-  }
-
-  .pdf-button {
-    @apply inline-flex items-center gap-1.5 px-3 py-1.5 text-caption font-medium
-           text-white rounded-sm transition-colors duration-150;
-    background-color: var(--color-accent);
-  }
-  .pdf-button:hover { background-color: #142d54; color: white; text-decoration: none; }
-
+  /* ── Cards ── */
   .pub-card {
     @apply bg-white border border-rule rounded-sm shadow-card
            hover:shadow-card-hover transition-shadow duration-200;
@@ -111,6 +78,42 @@
     @apply bg-white border border-rule rounded-sm px-5 py-4 text-center;
   }
 
+  /* ── Badges ── */
+  .pub-type-badge {
+    @apply inline-flex items-center px-2 py-0.5 text-label uppercase
+           tracking-wider rounded-sm border font-medium;
+  }
+
+  /* ── Category tag ── */
+  .cat-tag {
+    @apply inline-flex items-center px-2.5 py-1 text-caption font-medium
+           rounded-sm bg-archive-100 text-ink-muted border border-archive-200
+           transition-colors duration-150 cursor-pointer;
+  }
+  .cat-tag:hover {
+    background-color: var(--accent-light);
+    color:            var(--accent);
+    border-color:     var(--accent);
+    text-decoration:  none;
+  }
+
+  /* ── PDF / primary button ── */
+  .pdf-button {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 text-caption
+           font-medium text-white rounded-sm transition-colors duration-150;
+    background-color: var(--accent);
+  }
+  .pdf-button:hover {
+    background-color: var(--accent-hover);
+    color: white;
+    text-decoration: none;
+  }
+  .pdf-button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  /* ── Search input ── */
   .search-input {
     @apply w-full px-4 py-2.5 bg-white border border-rule rounded-sm
            font-sans text-body text-ink placeholder:text-ink-faint
@@ -118,45 +121,51 @@
     outline: none;
   }
   .search-input:focus {
-    border-color: var(--color-accent);
-    box-shadow: 0 0 0 2px #e8eef7;
+    border-color: var(--accent);
+    box-shadow:   0 0 0 2px var(--accent-light);
   }
 
+  /* ── Navigation ── */
   .nav-link {
-    @apply text-caption font-medium text-ink-muted uppercase tracking-wider
+    @apply font-medium text-ink-muted uppercase tracking-wider
            transition-colors duration-150;
+    font-size: 11px;
   }
   .nav-link:hover { @apply text-ink; text-decoration: none; }
+  .nav-link-active { @apply text-ink border-b border-ink pb-0.5; }
 
-  .nav-link-active {
-    @apply text-ink border-b border-ink pb-0.5;
-  }
-
+  /* ── Citation block ── */
   .citation-block {
-    @apply bg-archive-50 border border-rule rounded-sm p-4 font-mono text-caption text-ink-muted;
+    @apply bg-archive-50 border border-rule rounded-sm p-4 font-mono
+           text-caption text-ink-muted;
     word-break: break-all;
+    white-space: pre-wrap;
   }
 
+  /* ── Keyword pill ── */
   .keyword-pill {
     @apply inline-flex items-center px-2.5 py-1 text-caption
            bg-white border border-rule rounded-full text-ink-muted
-           transition-colors;
+           transition-colors duration-150;
   }
   .keyword-pill:hover {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
+    border-color: var(--accent);
+    color:        var(--accent);
   }
 }
 
-/* ── Scrollbar ──────────────────────────────────────── */
-::-webkit-scrollbar { width: 6px; height: 6px; }
+/* ── Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--color-bg); }
 ::-webkit-scrollbar-thumb { background: var(--color-rule); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #b0ab99; }
 
-/* ── Print ─────────────────────────────────────────── */
+/* ── Print ─────────────────────────────────────────────── */
 @media print {
   .no-print { display: none !important; }
-  body { background: white; }
-  .pub-card { box-shadow: none; border: 1px solid #ccc; }
+  body       { background: white; }
+  .pub-card  { box-shadow: none; border: 1px solid #ccc; }
 }
+
+/* ── Scroll margin for anchor links (author cards) ──────── */
+.scroll-mt-24 { scroll-margin-top: 6rem; }

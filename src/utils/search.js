@@ -1,33 +1,37 @@
+/**
+ * search.js
+ *
+ * PURPOSE:
+ * Pure functions for client-side search, filter, and sort over publication
+ * arrays returned from Supabase. Updated to use snake_case field names.
+ */
+
 import { normalise } from './formatters'
 
 /**
- * Search publications by query string.
- * Searches: title, abstract, keywords, author names, categories.
+ * Full-text search across title, abstract, keywords, categories, author names, type.
  */
 export function searchPublications(publications, query) {
   if (!query || query.trim() === '') return publications
-
-  const q = normalise(query)
-  const tokens = q.split(/\s+/).filter(Boolean)
+  const tokens = normalise(query).split(/\s+/).filter(Boolean)
 
   return publications.filter(pub => {
     const haystack = [
-      pub.title,
-      pub.abstract,
-      ...(pub.keywords || []),
+      pub.title        || '',
+      pub.abstract     || '',
+      ...(pub.keywords   || []),
       ...(pub.categories || []),
-      ...(pub.authors || []).map(a => a.name),
-      pub.type,
-    ]
-      .join(' ')
-      .toLowerCase()
+      ...(pub.authors    || []).map(a => a.name || ''),
+      pub.type         || '',
+      pub.archive_id   || '',
+    ].join(' ').toLowerCase()
 
     return tokens.every(token => haystack.includes(token))
   })
 }
 
 /**
- * Filter publications by category label (case-insensitive).
+ * Filter by category label (case-insensitive match against categories array).
  */
 export function filterByCategory(publications, category) {
   if (!category || category === 'all') return publications
@@ -38,7 +42,7 @@ export function filterByCategory(publications, category) {
 }
 
 /**
- * Filter publications by type.
+ * Filter by publication type.
  */
 export function filterByType(publications, type) {
   if (!type || type === 'all') return publications
@@ -46,24 +50,30 @@ export function filterByType(publications, type) {
 }
 
 /**
- * Sort publications by field.
+ * Sort publications. Uses snake_case published_date from Supabase.
  */
 export function sortPublications(publications, sortBy = 'newest') {
   const sorted = [...publications]
   switch (sortBy) {
     case 'newest':
-      return sorted.sort((a, b) => new Date(b.publishedDate) - new Date(a.publishedDate))
+      return sorted.sort((a, b) =>
+        new Date(b.published_date || 0) - new Date(a.published_date || 0)
+      )
     case 'oldest':
-      return sorted.sort((a, b) => new Date(a.publishedDate) - new Date(b.publishedDate))
+      return sorted.sort((a, b) =>
+        new Date(a.published_date || 0) - new Date(b.published_date || 0)
+      )
     case 'title':
-      return sorted.sort((a, b) => a.title.localeCompare(b.title))
+      return sorted.sort((a, b) =>
+        (a.title || '').localeCompare(b.title || '')
+      )
     default:
       return sorted
   }
 }
 
 /**
- * Apply all filters and search together.
+ * Apply all filters together.
  */
 export function applyFilters(publications, { query, category, type, sortBy }) {
   let result = publications
